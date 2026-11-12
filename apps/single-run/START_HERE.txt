@@ -1,0 +1,30 @@
+MIRONOVA SINGLE RUN v0.6.3 - WINDOWS
+
+1. Extract ALL files from this ZIP to a local folder, for example:
+   C:\Mironova Single Run
+   Do not run the app inside the ZIP.
+2. If an older version is running, close its launcher window first.
+3. Double-click Setup_Windows.bat once. Internet is needed for setup.
+   The app requires 64-bit Python 3.12 with the Python launcher enabled.
+   If this was already installed for the previous app, keep using it.
+   Python 3.15 can stay installed; this app explicitly selects Python 3.12.
+4. Double-click Start_Single_Run.bat. Keep its window open while working.
+   If the browser does not open, visit http://127.0.0.1:8502
+5. Choose Browse parent folder, enter the folder holding your .D injections,
+   and click Open / refresh library. Click any injection to analyze it.
+
+UPGRADING
+Keep your old application folder as a backup. Extract this version into a
+new folder, and COPY your old single_run_results folder into it before
+starting. Do not copy the old .venv312 folder; run Setup_Windows.bat.
+Your original Agilent data stays in its existing location and is read only.
+
+AFTER SETUP
+The app runs locally without this chat, an API key, or internet.
+This is a Python application with a double-click launcher, not a standalone EXE.
+It includes UV manual integration, rectangle deletion with group Undo,
+peak names, zoom/pan, selectable UV traces, UV blank correction, and PDF reports.
+MS chromatograms are displayed without integration or blank subtraction.
+The Single-point assay panel compares one known standard peak with one unknown
+peak using a provisional external-standard area ratio.
+Read USER_GUIDE.txt for full instructions. If setup fails, share setup-log.txt.

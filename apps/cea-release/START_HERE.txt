@@ -1,0 +1,78 @@
+MIRONOVA CEA RELEASE ANALYSIS 1.0 - WINDOWS
+
+This restores the CEA sequence calibration and formulation-assay workflow.
+It is separate from the Single Run UV/MS review application.
+
+INSTALL
+1. Extract ALL ZIP files to a NEW local folder, for example C:\CEA Release App.
+2. Use 64-bit Python 3.12 with the Python launcher installed. Python 3.15 may
+   remain installed; this application explicitly selects Python 3.12.
+3. Double-click Setup_Windows.bat once. Internet is needed for setup.
+4. Double-click Start_CEA_Release.bat whenever needed. Keep its window open.
+   If the browser does not open, visit http://127.0.0.1:8503.
+Once installed, the app works offline without this chat or an API key.
+This is a Python application with a double-click launcher, not a standalone EXE.
+If installation fails, share setup-log.txt from this folder.
+
+WORKFLOW
+1. Paste the folder containing ONE sequence of Agilent .D injections, or upload
+   a ZIP containing that sequence. Original instrument files are read only.
+2. Choose automatic UV selection (208 nm if available, otherwise 210 nm, then
+   the lowest available wavelength) or explicitly select the required wavelength.
+   Review target RT, prominence, peak width and local-baseline parameters.
+3. Click Load chromatograms. Inspect the target integration and raw metadata.
+   Proposed roles distinguish standards, samples, solvent and phenoxyethanol blanks.
+   A missing or ambiguous target is not treated as zero area.
+4. Review every injection assignment. For standards, use nominal mg/mL or enter
+   BOTH standard mass and volume; mass/volume takes priority. Exclusions and any
+   reviewed area override require a reason. All original data remains in exports.
+5. Verify sample preparation IDs, sample/batch IDs, formulation masses in mg,
+   final volumes in mL and additional dilution factors. No November weights are
+   automatically carried into a different run. Records in comments are proposals,
+   and missing information must be entered. Use separate batch IDs for unrelated
+   samples. Additional dilution defaults to 1 and must be verified.
+6. Choose the calculation method:
+   - Single external standard: explicitly choose the primary STD 1 concentration.
+     All included replicates at that concentration are averaged. Other standard
+     concentrations are checks, not part of the assay response factor. R squared
+     is not applicable; the displayed response line does not establish linearity.
+   - OLS calibration: unweighted free-intercept fit of concentration mean areas.
+     Normally at least three distinct concentrations are required. A two-level
+     exploratory fit requires an explicit checkbox and is flagged in the report.
+7. Select uncorrected estimate if reference purity is unavailable, or enter a
+   verified reference purity. Nominal standard concentrations must be uncorrected
+   if applying this factor. Purity is applied exactly once by the calculation.
+8. Check numerical criteria against the laboratory method, enter the analyst,
+   and confirm the reviewed inputs. Click Calculate results.
+9. Inspect assay results, calibration/check-standard responses and all findings.
+   Save report package creates analytical PDF, all-chromatograms PDF, CSV tables,
+   calculation JSON, original-source snapshots, reviewed inputs and SHA-256 manifest.
+   CSV tables can be opened in Excel. Download the complete package for all data.
+   Changing an input hides stale results and exports until recalculated.
+
+SAVED WORK
+Results are stored in cea_release_results beside the application. Raw imports
+are cached by source content, selected wavelength and integration parameters.
+Reopening exactly the same import can reuse reviewed preparation records; verify
+those records again before a new calculation. Changing raw contents or integration
+settings creates a new import. Keep this results folder when upgrading.
+
+SCOPE
+The recovered integration uses a target RT window, prominence/width constraints,
+a local straight baseline between median guard regions, and signed trapezoidal
+areas with interpolated endpoints. Units are mAU*s. It is intentionally the
+original CEA analysis method, not the generic Single Run AsLS integration.
+Solvent and phenoxyethanol controls are not calibration standards. No automatic
+blank subtraction is performed. Missing blank candidates do not prove zero
+response. Automatic peak identity, coelution resolution, chromatographic system
+suitability and final batch release approval are not provided.
+
+VALIDATION
+Every raw area and proposed role matched the saved August (19 injections, 210 nm)
+and November (23 injections, 208 nm) analyses. With the previously confirmed
+sample masses/volumes and uncorrected STD 1 concentrations, the restored
+single-standard results are 7.3803858666% w/w (August) and 7.8645344611% w/w
+(November). These are the prior automated results, not the chemist's rounded
+worksheet results (7.42 and 7.85). The historical November two-level OLS example,
+excluding the three 0.3596 mg/mL injections, reproduces preparation assays
+8.0967993585% and 8.2012842033%. No historical inputs or raw data are bundled.
